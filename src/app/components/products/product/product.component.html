@@ -1,0 +1,108 @@
+<div class="card">
+  <div class="card-body">
+    <form #productForm="ngForm" (ngSubmit)="onSubmit(productForm)" novalidate>
+      <!--  
+          Tener en cuenta que el nombre del campo debe ser el mismo 
+          a los nombre de las propiedades del objeto para hacer la referencia bien.
+        -->
+      <div class="form-group">
+              <input 
+              type="hidden" 
+              name="$key" 
+              #$key="ngModel" 
+              [(ngModel)]="_productServices.selectedProduct.$key">
+      </div>
+
+      <div class="form-group">
+        
+        <input
+              [class.is-invalid]="!nombre.valid && nombre.touched"
+              name="nombre" 
+              #nombre="ngModel"
+              [(ngModel)]="_productServices.selectedProduct.nombre"
+              type="text" 
+              class="form-control"
+              placeholder="Nombre del producto" required>
+
+        <div class="invalid-feedback" *ngIf="nombre.errors?.required">
+          este campo es obligatorio para guardar tu producto.
+        </div>
+             
+      </div>
+
+      <div class="form-group">
+
+          <input
+              [class.is-invalid]="!categoria.valid && categoria.touched"
+              name="categoria" 
+              #categoria="ngModel"
+              [(ngModel)]="_productServices.selectedProduct.categoria"
+              type="text" 
+              class="form-control"
+              placeholder="Categoria del producto" required>
+
+          <div class="invalid-feedback" *ngIf="categoria.errors?.required">
+            este campo es obligatorio para guardar tu producto.
+          </div>
+
+      </div>
+
+      <div class="form-group">
+
+          <input
+              [class.is-invalid]="localizacion.invalid && localizacion.touched"
+              name="localizacion" 
+              #localizacion="ngModel"
+              [(ngModel)]="_productServices.selectedProduct.localizacion"
+              type="text" 
+              class="form-control"
+              placeholder="Localización del producto"
+              required
+              maxlength="4">
+
+          <div class="invalid-feedback" *ngIf="localizacion.errors?.required">
+            este campo es obligatorio para guardar tu producto.
+          </div>
+
+      </div>
+
+      <div class="form-group">
+
+          <input
+              [class.is-invalid]="precio.invalid && precio.touched"
+              name="precio" 
+              #precio="ngModel"
+              [(ngModel)]="_productServices.selectedProduct.precio"
+              type="number" 
+              class="form-control"
+              placeholder="Precio del producto" required>
+
+          <div class="invalid-feedback" *ngIf="precio.errors?.required">
+            este campo es obligatorio para guardar tu producto.
+          </div>
+      </div>
+      
+      <div class="form-group text-center">
+
+        <button *ngIf="productForm.value.$key != null"
+                type="submit" 
+                class="btn btn-outline-primary" (click)="onSubmit()">
+            <i class="fas fa-check"></i> Actualizar Producto
+        </button>
+
+        <button [disabled]="!productForm.valid"
+                *ngIf="productForm.value.$key == null"
+                type="submit" 
+                class="btn btn-outline-primary" (click)="onSubmit()">
+            <i class="fas fa-plus-circle fa-fw"></i> Agregar Producto
+        </button>
+
+        <button type="reset" class="btn btn-outline-secondary" (click)="resetForm(productForm)">
+          <i class="fas fa-sync-alt"></i> Reset
+        </button>
+        
+      </div>
+
+    </form>
+  </div>
+</div>
